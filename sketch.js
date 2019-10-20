@@ -6,6 +6,7 @@ const MOVE_RIGHT = 68;
 
 const sceneH = 600;
 const sceneW = 600;
+let redraw_button;
 
 let walls = [];
 let particle;
@@ -27,6 +28,22 @@ function setup() {
     walls.push(new Wall(sceneW, 0, sceneW, sceneH));
 
     particle = new Particle();
+
+    redraw_button = createButton("Randomise Walls");
+    redraw_button.position(7, sceneH + 20);
+    redraw_button.mousePressed(setup);
+}
+
+function keyPressed() {
+    if (keyIsDown(MOVE_UP)) {
+        particle.move(0, -MOVE_RATE);
+    } else if (keyIsDown(MOVE_LEFT)) {
+        particle.move(-MOVE_RATE);
+    } else if (keyIsDown(MOVE_DOWN)) {
+        particle.move(0, MOVE_RATE);
+    } else if (keyIsDown(MOVE_RIGHT)) {
+        particle.move(MOVE_RATE);
+    }
 }
 
 function draw() {
@@ -36,22 +53,8 @@ function draw() {
         wall.show();
     }
 
-    //particle.rotate(0);
     particle.rotatePos(mouseX, mouseY);
     particle.look(walls);
     particle.show();
-
-    if (keyIsDown(MOVE_UP)) {
-        particle.move(0, -MOVE_RATE);
-    } else if (keyIsDown(MOVE_LEFT)) {
-        particle.move(-MOVE_RATE);
-    } else if (keyIsDown(MOVE_DOWN)) {
-        particle.move(0, MOVE_RATE);
-    } else if (keyIsDown(MOVE_RIGHT)) {
-        particle.move(MOVE_RATE);
-    } else if (keyIsDown(UP_ARROW)) {
-        particle.rotate(-0.05);
-    } else if (keyIsDown(DOWN_ARROW)) {
-        particle.rotate(0.05);
-    }
+    keyPressed()
 }

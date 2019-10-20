@@ -25,8 +25,7 @@ class Particle {
         let delta_x = x - this.pos.x;
         let delta_y = y - this.pos.y;
         let angle = atan(delta_y / delta_x);
-        // NOTE: FIX ROTATION FOR LEFT HEMISPHERE
-        this.rotate(angle - radians(this.fov / 2), false);
+        this.rotate((delta_x < 0 ? angle + PI : angle) - radians(this.fov / 2), false);
     }
 
     look(walls) {
