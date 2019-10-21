@@ -25,11 +25,11 @@ function initWalls() {
     for (let i = 0; i < wall_count; i++) {
         Math.seedrandom(str((i) * seed));
         let x1 = Math.random() * sceneW;
-        Math.seedrandom(str((i + x1) * seed));
+        Math.seedrandom(str((i + x1) * seed * x1));
         let y1 = Math.random() * sceneH;
-        Math.seedrandom(str((i + y1) * seed));
+        Math.seedrandom(str((i + y1) * seed * y1));
         let x2 = Math.random() * sceneW;
-        Math.seedrandom(str((i + x2) * seed));
+        Math.seedrandom(str((i + x2) * seed * x2));
         let y2 = Math.random() * sceneH;
         walls.push(new Wall(x1, y1, x2, y2));
     }
