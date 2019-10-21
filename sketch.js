@@ -9,23 +9,29 @@ const sceneW = 600;
 
 let redraw_button;
 let wall_count_input;
+let wall_seed;
 let fov_slider;
 let color_input;
 let opacity_input;
 
 let walls = [];
 let wall_count = 5;
+let seed = Math.random();
 let particle;
 
 function initWalls() {
     walls = [];
 
     for (let i = 0; i < wall_count; i++) {
-        let x1 = random(sceneW);
-        let y1 = random(sceneH);
-        let x2 = random(sceneW);
-        let y2 = random(sceneH);
-        walls[i] = new Wall(x1, y1, x2, y2);
+        Math.seedrandom(str((i) * seed));
+        let x1 = Math.random() * sceneW;
+        Math.seedrandom(str((i + x1) * seed));
+        let y1 = Math.random() * sceneH;
+        Math.seedrandom(str((i + y1) * seed));
+        let x2 = Math.random() * sceneW;
+        Math.seedrandom(str((i + x2) * seed));
+        let y2 = Math.random() * sceneH;
+        walls.push(new Wall(x1, y1, x2, y2));
     }
 
     walls.push(new Wall(0, 0, sceneW, 0));
@@ -40,7 +46,7 @@ function setup() {
     initWalls();
     particle = new Particle();
 
-    redraw_button = createButton("Randomise Walls");
+    redraw_button = createButton("Seed Walls");
     redraw_button.position(7, sceneH + 20);
     redraw_button.mousePressed(initWalls);
 
@@ -58,6 +64,10 @@ function setup() {
     wall_count_input = createInput("5");
     wall_count_input.style("width: 30px; border-radius: 2px; border: none; text-align: center;");
     wall_count_input.position(7, sceneH + 45);
+
+    wall_seed = createInput("");
+    wall_seed.style("width: 60px; border-radius: 2px; border: none;");
+    wall_seed.position(55, sceneH + 45);
 }
 
 function keyPressed() {
@@ -72,14 +82,20 @@ function keyPressed() {
     }
 }
 
+function stringSum(string) {
+    const sumChar = (a, b) => parseInt(a) + b.charCodeAt(0);
+    return string.length == 0 ? random(sceneH * sceneH) : string.reduce(sumChar, 0);
+}
+
 function draw() {
     background(0);
 
-    for (let wall of walls) {
+    for (wall of walls) {
         wall.show();
     }
 
     wall_count = wall_count_input.value();
+    seed = stringSum(wall_seed.value().split(""));
     particle.setColor(color(color_input.value()).levels[3] = opacity_input.value());
     particle.setFOV(fov_slider.value());
     particle.rotatePos(mouseX, mouseY);

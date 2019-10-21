@@ -16,6 +16,10 @@ class Particle {
         this.fov = fov;
     }
 
+    getFOV() {
+        return this.fov;
+    }
+
     setColor(color) {
         this.rayColor = color;
     }
