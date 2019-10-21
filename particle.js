@@ -5,13 +5,19 @@ class Particle {
         this.pos = createVector(sceneW / 2, height / 2)
         this.rays = [];
         this.heading = 0;
+        this.rayColor = color(255, 255, 255, 100);
+
         for (let a = -this.fov / 2; a < this.fov / 2; a += this.rayAngle) {
             this.rays.push(new Ray(this.pos, radians(a)));
         }
     }
 
     setFOV(fov) {
-        this.fov = fov % 360;
+        this.fov = fov;
+    }
+
+    setColor(color) {
+        this.rayColor = color;
     }
 
     rotate(angle, static_rotate=true) {
@@ -43,7 +49,7 @@ class Particle {
                 }
             }
             if (closest) {
-                stroke(255, 100);
+                stroke(this.rayColor);
                 line(this.pos.x, this.pos.y, closest.x, closest.y);
             }
         }
