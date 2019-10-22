@@ -1,3 +1,20 @@
 body {
     background-color: #232323;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#sketch_view {
+    top: 0;
+}
+
+#settings {
+    margin-top: 10px;
+}
+
+#settings,th {
+    color: #d88383;
+}
+
+#settings,td {
+    color: #ffff61;
 }

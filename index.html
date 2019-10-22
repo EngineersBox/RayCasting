@@ -4,11 +4,70 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
-        <script type="text/javascript" src="sketch.js"></script>
-        <script type="text/javascript" src="wall.js"></script>
-        <script type="text/javascript" src="ray.js"></script>
-        <script type="text/javascript" src="particle.js"></script>
     </head>
     <body>
+        <div id="sketch_view">
+            <script type="text/javascript" src="sketch.js"></script>
+            <script type="text/javascript" src="wall.js"></script>
+            <script type="text/javascript" src="ray.js"></script>
+            <script type="text/javascript" src="particle.js"></script>
+        </div>
+        <div id="settings">
+            <table id="settings_table">
+                <tr>
+                    <th>Description</th>
+                    <th>Setting</th>
+                </tr>
+                <tr>
+                    <td>
+                        Wall Count
+                    </td>
+                    <td>
+                        <input id="wall_count" type="text" value="5" style="width: 30px; border-radius: 2px; border: none; text-align: center;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Wall Seed
+                    </td>
+                    <td>
+                        <input  id="wall_seed" type="text" style="width: 60px; border-radius: 2px; border: none;">
+                        <button  id="seed_button" type="button" onclick="initWalls()">Seed Walls</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Speed
+                    </td>
+                    <td>
+                        <input id="particle_speed" type="text" value="3" style="width: 30px; border-radius: 2px; border: none; text-align: center;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Particle FOV
+                    </td>
+                    <td>
+                        <input id="fov" type="range" min="0" max="360" value="70" style="width: 80px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ray Color
+                    </td>
+                    <td>
+                        <input id="ray_color" type="color" value="#ffffff">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ray Opacity
+                    </td>
+                    <td>
+                        <input id="ray_opacity" type="range" min="0" max="255" value="155" style="width: 80px;">
+                    </td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>

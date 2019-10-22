@@ -1,4 +1,4 @@
-const MOVE_RATE = 3;
+let MOVE_RATE = 3;
 const MOVE_UP = 87;
 const MOVE_LEFT = 65;
 const MOVE_DOWN = 83;
@@ -13,6 +13,7 @@ let wall_seed;
 let fov_slider;
 let color_input;
 let opacity_input;
+let change_move_rate;
 
 let walls = [];
 let wall_count = 5;
@@ -41,33 +42,11 @@ function initWalls() {
 }
 
 function setup() {
-    createCanvas(600, 600);
+    let canvas = createCanvas(600, 600);
+    canvas.parent("sketch_view");
 
     initWalls();
     particle = new Particle();
-
-    redraw_button = createButton("Seed Walls");
-    redraw_button.position(7, sceneH + 20);
-    redraw_button.mousePressed(initWalls);
-
-    fov_slider = createSlider(0, 360, 70, 1);
-    fov_slider.position(120, sceneH + 20);
-    fov_slider.style("width", "80px");
-
-    color_input = createColorPicker("#ffffff");
-    color_input.position(210, sceneH + 18);
-
-    opacity_input = createSlider(0, 255, 155, 1);
-    opacity_input.position(210, sceneH + 48);
-    opacity_input.style("width", "80px");
-
-    wall_count_input = createInput("5");
-    wall_count_input.style("width: 30px; border-radius: 2px; border: none; text-align: center;");
-    wall_count_input.position(7, sceneH + 45);
-
-    wall_seed = createInput("");
-    wall_seed.style("width: 60px; border-radius: 2px; border: none;");
-    wall_seed.position(55, sceneH + 45);
 }
 
 function keyPressed() {
@@ -87,17 +66,43 @@ function stringSum(string) {
     return string.length == 0 ? random(sceneH * sceneH) : string.reduce(sumChar, 0);
 }
 
+function hexToRgb(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
 function draw() {
+
+    redraw_button = document.getElementById("seed_button");
+    wall_count_input = document.getElementById("wall_count");
+    wall_seed = document.getElementById("wall_seed");
+    fov_slider = document.getElementById("fov");
+    color_input = document.getElementById("ray_color");
+    opacity_input = document.getElementById("ray_opacity");
+    change_move_rate = document.getElementById("particle_speed");
+
     background(0);
 
     for (wall of walls) {
         wall.show();
     }
 
-    wall_count = wall_count_input.value();
-    seed = stringSum(wall_seed.value().split(""));
-    particle.setColor(color(color_input.value()).levels[3] = opacity_input.value());
-    particle.setFOV(fov_slider.value());
+    MOVE_RATE = int(change_move_rate.value);
+    wall_count = wall_count_input.value;
+    seed = stringSum(wall_seed.value.split(""));
+    let c_color = hexToRgb(color_input.value);
+    particle.setColor(color(c_color.r, c_color.g, c_color.b, int(opacity_input.value)));
+    particle.setFOV(int(fov_slider.value));
     particle.rotatePos(mouseX, mouseY);
     particle.look(walls);
     particle.show();
