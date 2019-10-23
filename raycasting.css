@@ -13,8 +13,14 @@ body {
 
 #settings,th {
     color: #d88383;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 #settings,td {
     color: #ffff61;
+}
+#ray_color {
+    border: none;
+    border-radius: 2px;
 }

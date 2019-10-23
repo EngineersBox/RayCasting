@@ -11,6 +11,7 @@
             <script type="text/javascript" src="wall.js"></script>
             <script type="text/javascript" src="ray.js"></script>
             <script type="text/javascript" src="particle.js"></script>
+            <script type="text/javascript" src="utils.js"></script>
         </div>
         <div id="settings">
             <table id="settings_table">
@@ -49,6 +50,7 @@
                     </td>
                     <td>
                         <input id="fov" type="range" min="0" max="360" value="70" style="width: 80px;">
+                        <button type="button" id="fov_reset" onclick="Utils.resetById('fov', 70)">Reset FOV</button>
                     </td>
                 </tr>
                 <tr>
@@ -57,6 +59,7 @@
                     </td>
                     <td>
                         <input id="ray_color" type="color" value="#ffffff">
+                        <button type="button" id="fov_reset" onclick="Utils.resetById('ray_color', '#ffffff')">Reset Color</button>
                     </td>
                 </tr>
                 <tr>
@@ -65,6 +68,7 @@
                     </td>
                     <td>
                         <input id="ray_opacity" type="range" min="0" max="255" value="155" style="width: 80px;">
+                        <button type="button" id="fov_reset" onclick="Utils.resetById('ray_opacity', 155)">Reset Opacity</button>
                     </td>
                 </tr>
             </table>

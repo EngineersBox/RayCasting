@@ -1,3 +1,9 @@
+function rayInit(instance) {
+    for (let a = -instance.fov / 2; a < instance.fov / 2; a += instance.rayAngle) {
+        instance.rays.push(new Ray(instance.pos, radians(a)));
+    }
+}
+
 class Particle {
     constructor() {
         this.fov = 70;
@@ -6,14 +12,15 @@ class Particle {
         this.rays = [];
         this.heading = 0;
         this.rayColor = color(255, 255, 255, 100);
-
-        for (let a = -this.fov / 2; a < this.fov / 2; a += this.rayAngle) {
-            this.rays.push(new Ray(this.pos, radians(a)));
-        }
+        this.x_limit = {MIN: 0, MAX: sceneW};
+        this.y_limit = {MIN: 0, MAX: sceneH};
+        rayInit(this);
     }
 
     setFOV(fov) {
+        this.rays = [];
         this.fov = fov;
+        rayInit(this);
     }
 
     getFOV() {
@@ -60,7 +67,8 @@ class Particle {
     }
 
     move(x=0, y=0) {
-        this.pos.set(this.pos.x + x, this.pos.y + y);
+        this.update(Utils.limitRange(this.x_limit.MIN, this.x_limit.MAX, this.pos.x + x),
+                    Utils.limitRange(this.y_limit.MIN, this.y_limit.MAX, this.pos.y + y));
     }
 
     update(x, y) {

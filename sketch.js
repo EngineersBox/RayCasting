@@ -42,7 +42,7 @@ function initWalls() {
 }
 
 function setup() {
-    let canvas = createCanvas(600, 600);
+    let canvas = createCanvas(1200, 600);
     canvas.parent("sketch_view");
 
     initWalls();
@@ -61,27 +61,13 @@ function keyPressed() {
     }
 }
 
-function stringSum(string) {
-    const sumChar = (a, b) => parseInt(a) + b.charCodeAt(0);
-    return string.length == 0 ? random(sceneH * sceneH) : string.reduce(sumChar, 0);
-}
-
-function hexToRgb(hex) {
-    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-        return r + r + g + g + b + b;
-    });
-
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-    } : null;
-}
-
 function draw() {
+
+    background(0);
+
+    for (wall of walls) {
+        wall.show();
+    }
 
     redraw_button = document.getElementById("seed_button");
     wall_count_input = document.getElementById("wall_count");
@@ -91,20 +77,17 @@ function draw() {
     opacity_input = document.getElementById("ray_opacity");
     change_move_rate = document.getElementById("particle_speed");
 
-    background(0);
-
-    for (wall of walls) {
-        wall.show();
-    }
-
     MOVE_RATE = int(change_move_rate.value);
     wall_count = wall_count_input.value;
-    seed = stringSum(wall_seed.value.split(""));
-    let c_color = hexToRgb(color_input.value);
+    seed = Utils.stringSum(wall_seed.value.split(""));
+
+    let c_color = Utils.hexToRgb(color_input.value);
     particle.setColor(color(c_color.r, c_color.g, c_color.b, int(opacity_input.value)));
+
     particle.setFOV(int(fov_slider.value));
     particle.rotatePos(mouseX, mouseY);
     particle.look(walls);
     particle.show();
+
     keyPressed()
 }
