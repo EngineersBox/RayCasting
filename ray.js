@@ -1,13 +1,24 @@
 class Ray {
+    /**
+     * @param {p5.Vector} pos 
+     * @param {Number} angle 
+     */
     constructor(pos, angle) {
         this.pos = pos;
         this.dir = p5.Vector.fromAngle(angle);
     }
     
+    /**
+     * @param {Number} angle 
+     */
     setAngle(angle) {
         this.dir = p5.Vector.fromAngle(angle);
     }
 
+    /**
+     * @param {Number} x
+     * @param {Number} y
+     */
     lookat(x, y) {
         this.dir.x = x - this.pos.x;
         this.dir.y = y - this.pos.y;
@@ -22,6 +33,9 @@ class Ray {
         pop();
     }
 
+    /**
+     * @param {Wall} wall 
+     */
     cast(wall) {
         const x1 = wall.a.x;
         const y1 = wall.a.y;

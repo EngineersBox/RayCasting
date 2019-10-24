@@ -1,5 +1,9 @@
 class Utils {
 
+    /**
+     * @param {String} element_id 
+     * @param {*} new_value 
+     */
     static resetById(element_id, new_value) {
         if (typeof element_id !== "string") {
             new TypeError("element_id must be of type string")
@@ -7,11 +11,17 @@ class Utils {
         document.getElementById(element_id).value = new_value;
     }
 
-    static stringSum(string) {
+    /**
+     * @param {String} string_val
+     */
+    static stringSum(string_val) {
         const sumChar = (a, b) => parseInt(a) + b.charCodeAt(0);
-        return string.length == 0 ? random(sceneH * sceneH) : string.reduce(sumChar, 0);
+        return string_val.length == 0 ? random(sceneH * sceneH) : string_val.reduce(sumChar, 0);
     }
 
+    /**
+     * @param {String} hex 
+     */
     static hexToRgb(hex) {
         var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
         hex = hex.replace(shorthandRegex, function (m, r, g, b) {
@@ -26,6 +36,11 @@ class Utils {
         } : null;
     }
     
+    /**
+     * @param {Number} lower 
+     * @param {Number} upper
+     * @param {Number} value
+     */
     static limitRange(lower, upper, value) {
         if (value < lower) {
             return lower;

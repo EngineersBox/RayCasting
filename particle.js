@@ -1,3 +1,6 @@
+/**
+ * @param {Object} instance 
+ */
 function rayInit(instance) {
     for (let a = -instance.fov / 2; a < instance.fov / 2; a += instance.rayAngle) {
         instance.rays.push(new Ray(instance.pos, radians(a)));
@@ -5,6 +8,7 @@ function rayInit(instance) {
 }
 
 class Particle {
+
     constructor() {
         this.fov = 70;
         this.rayAngle = 1;
@@ -17,20 +21,33 @@ class Particle {
         rayInit(this);
     }
 
+    /**
+     * @param {Number} fov 
+     */
     setFOV(fov) {
         this.rays = [];
         this.fov = fov;
         rayInit(this);
     }
 
+    /**
+     * @returns {Number}
+     */
     getFOV() {
         return this.fov;
     }
 
+    /**
+     * @param {p5.Color} color 
+     */
     setColor(color) {
         this.rayColor = color;
     }
 
+    /**
+     * @param {Number} angle 
+     * @param {Boolean} static_rotate 
+     */
     rotate(angle, static_rotate=true) {
         this.heading = static_rotate ? this.heading + angle : angle;
         for (let i = 0; i < this.rays.length; i++) {
@@ -38,6 +55,10 @@ class Particle {
         }
     }
 
+    /**
+     * @param {Number} x 
+     * @param {Number} y 
+     */
     rotatePos(x, y) {
         let delta_x = x - this.pos.x;
         let delta_y = y - this.pos.y;
@@ -45,6 +66,9 @@ class Particle {
         this.rotate((delta_x < 0 ? angle + PI : angle) - radians(this.fov / 2), false);
     }
 
+    /**
+     * @param {Wall} walls 
+     */
     look(walls) {
         for (let ray of this.rays) {
             let closest = null;
@@ -66,11 +90,19 @@ class Particle {
         }
     }
 
+    /**
+     * @param {Number} x 
+     * @param {Number} y 
+     */
     move(x=0, y=0) {
         this.update(Utils.limitRange(this.x_limit.MIN, this.x_limit.MAX, this.pos.x + x),
                     Utils.limitRange(this.y_limit.MIN, this.y_limit.MAX, this.pos.y + y));
     }
 
+    /**
+     * @param {Number} x
+     * @param {Number} y
+     */
     update(x, y) {
         this.pos.set(x, y);
     }
