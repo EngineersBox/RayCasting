@@ -3,6 +3,7 @@ const MOVE_UP = 87;
 const MOVE_LEFT = 65;
 const MOVE_DOWN = 83;
 const MOVE_RIGHT = 68;
+const FLASHLIGHT_KEY = 76;
 
 const sceneH = 600;
 const sceneW = 600;
@@ -19,6 +20,9 @@ let walls = [];
 let wall_count = 5;
 let seed = Math.random();
 let particle;
+
+let toRender = [];
+let flashlight = {STATE: true, VALUE: 10};
 
 function initWalls() {
     walls = [];
@@ -58,6 +62,8 @@ function keyPressed() {
         particle.move(0, MOVE_RATE);
     } else if (keyIsDown(MOVE_RIGHT)) {
         particle.move(MOVE_RATE);
+    } else if (keyIsDown(FLASHLIGHT_KEY)) {
+        flashlight.STATE = !flashlight.STATE;
     }
 }
 
@@ -89,5 +95,20 @@ function draw() {
     particle.look(walls);
     particle.show();
 
-    keyPressed()
+    keyPressed();
+
+    let slice_width = sceneW / particle.getFOV();
+    for (r of toRender) {
+        let x_val = Utils.zeroRange(r[0].angleBetween(toRender[toRender.length - 1][0]), particle.getFOV());
+        let d2 = (100 / r[1]);
+        let ray_brightness = 255 * d2;
+        if (!flashlight.STATE) {
+            ray_brightness = flashlight.VALUE;
+        }
+        
+        rectMode(CENTER);
+        noStroke();
+        fill(c_color.r, c_color.g, c_color.b, ray_brightness);
+        rect(sceneW / 2 + (x_val * slice_width), sceneH / 2, slice_width, sceneH * d2);
+    }
 }

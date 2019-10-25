@@ -13,6 +13,7 @@ class Utils {
 
     /**
      * @param {String} string_val
+     * @returns {Number}
      */
     static stringSum(string_val) {
         const sumChar = (a, b) => parseInt(a) + b.charCodeAt(0);
@@ -21,6 +22,7 @@ class Utils {
 
     /**
      * @param {String} hex 
+     * @returns {Object}
      */
     static hexToRgb(hex) {
         var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -40,14 +42,24 @@ class Utils {
      * @param {Number} lower 
      * @param {Number} upper
      * @param {Number} value
+     * @returns {Number}
      */
     static limitRange(lower, upper, value) {
         if (value < lower) {
-            return lower;
+            return lower + 1;
         } else if (value > upper) {
-            return upper;
+            return upper - 1;
         }
         return value;
+    }
+
+    /**
+     * @param {p5.Vector} angle 
+     * @param {Number} theta 
+     * @returns {Number}
+     */
+    static zeroRange(angle, theta) {
+        return degrees(angle) + (theta / 2);
     }
 
 }

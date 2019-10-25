@@ -70,6 +70,7 @@ class Particle {
      * @param {Wall} walls 
      */
     look(walls) {
+        toRender = [];
         for (let ray of this.rays) {
             let closest = null;
             let record = Infinity;
@@ -86,6 +87,7 @@ class Particle {
             if (closest) {
                 stroke(this.rayColor);
                 line(this.pos.x, this.pos.y, closest.x, closest.y);
+                toRender.push([ray.dir, p5.Vector.dist(this.pos, closest)]);
             }
         }
     }
