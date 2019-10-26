@@ -36,6 +36,8 @@ function initWalls() {
         let x2 = Math.random() * sceneW;
         Math.seedrandom(str((i + x2) * seed * x2));
         let y2 = Math.random() * sceneH;
+
+        Math.seedrandom();
         let r = Math.random() * 255;
         let g = Math.random() * 255;
         let b = Math.random() * 255;
@@ -46,6 +48,39 @@ function initWalls() {
     walls.push(new Wall(0, 0, 0, sceneH, color(255)));
     walls.push(new Wall(0, sceneH, sceneW, sceneH, color(255)));
     walls.push(new Wall(sceneW, 0, sceneW, sceneH, color(255)));
+}
+
+function renderWalls() {
+    let slice_width = sceneW / particle.getFOV();
+    for (r of toRender) {
+        let color = {
+            r: r[2].levels[0],
+            g: r[2].levels[1],
+            b: r[2].levels[2],
+            a: r[2].levels[3]
+        }
+        let x_val = Utils.zeroRange(r[0].angleBetween(toRender[toRender.length - 1][0]), particle.getFOV());
+        let d2 = (100 / r[1]);
+        let ray_brightness = 255 * d2;
+        if (!flashlight.STATE) {
+            ray_brightness = flashlight.VALUE;
+        }
+
+        rectMode(CENTER);
+        noStroke();
+        fill(color.r, color.g, color.b, ray_brightness);
+        rect(sceneW / 2 + (x_val * slice_width), sceneH / 2, slice_width, sceneH * d2);
+    }
+}
+
+function wallColorRandomize() {
+    for (wall of walls.slice(0, walls.length - 4)) {
+        Math.seedrandom();
+        let r = Math.random() * 255;
+        let g = Math.random() * 255;
+        let b = Math.random() * 255;
+        wall.color.levels = [r, g, b, wall.color.levels[3]];
+    }
 }
 
 function setup() {
@@ -99,25 +134,5 @@ function draw() {
     particle.show();
 
     keyPressed();
-
-    let slice_width = sceneW / particle.getFOV();
-    for (r of toRender) {
-        let color = {
-            r: r[2].levels[0],
-            g: r[2].levels[1],
-            b: r[2].levels[2],
-            a: r[2].levels[3]
-        }
-        let x_val = Utils.zeroRange(r[0].angleBetween(toRender[toRender.length - 1][0]), particle.getFOV());
-        let d2 = (100 / r[1]);
-        let ray_brightness = 255 * d2;
-        if (!flashlight.STATE) {
-            ray_brightness = flashlight.VALUE;
-        }
-        
-        rectMode(CENTER);
-        noStroke();
-        fill(color.r, color.g, color.b, ray_brightness);
-        rect(sceneW / 2 + (x_val * slice_width), sceneH / 2, slice_width, sceneH * d2);
-    }
+    renderWalls();
 }

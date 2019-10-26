@@ -1,5 +1,7 @@
 <html>
     <head>
+        <title>3D Ray Casting Rendering</title>
+        <link rel="shortcut icon" type="image/x-icon" href="images/tab-icon.ico">
         <link rel="stylesheet" type="text/css" href="raycasting.css">
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.js"></script>
@@ -33,8 +35,16 @@
                         Wall Seed
                     </td>
                     <td>
-                        <input  id="wall_seed" type="text" style="width: 60px; border-radius: 2px; border: none;">
-                        <button  id="seed_button" type="button" onclick="initWalls()">Seed Walls</button>
+                        <input id="wall_seed" type="text" style="width: 60px; border-radius: 2px; border: none;">
+                        <button id="seed_button" type="button" onclick="initWalls()">Seed Walls</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Wall Colours
+                    </td>
+                    <td>
+                        <button id="wall_color_rand" type="button" onclick="wallColorRandomize()">Randomize Colour</button>
                     </td>
                 </tr>
                 <tr>
