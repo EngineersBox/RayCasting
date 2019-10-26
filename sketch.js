@@ -26,7 +26,7 @@ let flashlight = {STATE: true, VALUE: 10};
 
 function initWalls() {
     walls = [];
-
+    // Display seed if randomised not specified
     for (let i = 0; i < wall_count; i++) {
         Math.seedrandom(str((i) * seed));
         let x1 = Math.random() * sceneW;
@@ -36,13 +36,16 @@ function initWalls() {
         let x2 = Math.random() * sceneW;
         Math.seedrandom(str((i + x2) * seed * x2));
         let y2 = Math.random() * sceneH;
-        walls.push(new Wall(x1, y1, x2, y2));
+        let r = Math.random() * 255;
+        let g = Math.random() * 255;
+        let b = Math.random() * 255;
+        walls.push(new Wall(x1, y1, x2, y2, color(r, g, b)));
     }
 
-    walls.push(new Wall(0, 0, sceneW, 0));
-    walls.push(new Wall(0, 0, 0, sceneH));
-    walls.push(new Wall(0, sceneH, sceneW, sceneH));
-    walls.push(new Wall(sceneW, 0, sceneW, sceneH));
+    walls.push(new Wall(0, 0, sceneW, 0, color(255)));
+    walls.push(new Wall(0, 0, 0, sceneH, color(255)));
+    walls.push(new Wall(0, sceneH, sceneW, sceneH, color(255)));
+    walls.push(new Wall(sceneW, 0, sceneW, sceneH, color(255)));
 }
 
 function setup() {
@@ -99,6 +102,12 @@ function draw() {
 
     let slice_width = sceneW / particle.getFOV();
     for (r of toRender) {
+        let color = {
+            r: r[2].levels[0],
+            g: r[2].levels[1],
+            b: r[2].levels[2],
+            a: r[2].levels[3]
+        }
         let x_val = Utils.zeroRange(r[0].angleBetween(toRender[toRender.length - 1][0]), particle.getFOV());
         let d2 = (100 / r[1]);
         let ray_brightness = 255 * d2;
@@ -108,7 +117,7 @@ function draw() {
         
         rectMode(CENTER);
         noStroke();
-        fill(c_color.r, c_color.g, c_color.b, ray_brightness);
+        fill(color.r, color.g, color.b, ray_brightness);
         rect(sceneW / 2 + (x_val * slice_width), sceneH / 2, slice_width, sceneH * d2);
     }
 }

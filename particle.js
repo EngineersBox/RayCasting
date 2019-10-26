@@ -80,14 +80,14 @@ class Particle {
                     const d = p5.Vector.dist(this.pos, pt);
                     if (d < record) {
                         record = d;
-                        closest = pt;
+                        closest = {POINT: pt, WALL: wall};
                     }
                 }
             }
             if (closest) {
                 stroke(this.rayColor);
-                line(this.pos.x, this.pos.y, closest.x, closest.y);
-                toRender.push([ray.dir, p5.Vector.dist(this.pos, closest)]);
+                line(this.pos.x, this.pos.y, closest.POINT.x, closest.POINT.y);
+                toRender.push([ray.dir, p5.Vector.dist(this.pos, closest.POINT), closest.WALL.color]);
             }
         }
     }
