@@ -26,7 +26,7 @@ let flashlight = {STATE: true, VALUE: 10};
 
 function initWalls() {
     walls = [];
-    // Display seed if randomised not specified
+    
     for (let i = 0; i < wall_count; i++) {
         Math.seedrandom(str((i) * seed));
         let x1 = Math.random() * sceneW;

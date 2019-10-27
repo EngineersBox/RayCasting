@@ -5,6 +5,7 @@ class Wall {
      * @param {Number} y1
      * @param {Number} x2
      * @param {Number} y2
+     * @param {p5.Color} color
      */
     constructor(x1, y1, x2, y2, color) {
         this.a = createVector(x1, y1);
