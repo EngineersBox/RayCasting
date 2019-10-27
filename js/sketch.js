@@ -37,10 +37,9 @@ function initWalls() {
         Math.seedrandom(str((i + x2) * seed * x2));
         let y2 = Math.random() * sceneH;
 
-        Math.seedrandom();
-        let r = Math.random() * 255;
-        let g = Math.random() * 255;
-        let b = Math.random() * 255;
+        let r = ColourUtils.randColour(255);
+        let g = ColourUtils.randColour(255);
+        let b = ColourUtils.randColour(255);
         walls.push(new Wall(x1, y1, x2, y2, color(r, g, b)));
     }
 
@@ -59,7 +58,7 @@ function renderWalls() {
             b: r[2].levels[2],
             a: r[2].levels[3]
         }
-        let x_val = Utils.zeroRange(r[0].angleBetween(toRender[toRender.length - 1][0]), particle.getFOV());
+        let x_val = RangeUtils.zeroRange(r[0].angleBetween(toRender[toRender.length - 1][0]), particle.getFOV());
         let d2 = (100 / r[1]);
         let ray_brightness = 255 * d2;
         if (!flashlight.STATE) {
@@ -69,22 +68,21 @@ function renderWalls() {
         rectMode(CENTER);
         noStroke();
         fill(color.r, color.g, color.b, ray_brightness);
-        rect(sceneW / 2 + (x_val * slice_width), sceneH / 2, slice_width, sceneH * d2);
+        rect((sceneW / 2) + (slice_width / 2) + (x_val * slice_width), sceneH / 2, slice_width, sceneH * d2);
     }
 }
 
 function wallColorRandomize() {
     for (wall of walls.slice(0, walls.length - 4)) {
-        Math.seedrandom();
-        let r = Math.random() * 255;
-        let g = Math.random() * 255;
-        let b = Math.random() * 255;
+        let r = ColourUtils.randColour(255);
+        let g = ColourUtils.randColour(255);
+        let b = ColourUtils.randColour(255);
         wall.color.levels = [r, g, b, wall.color.levels[3]];
     }
 }
 
 function setup() {
-    let canvas = createCanvas(1200, 600);
+    let canvas = createCanvas(sceneW * 2, sceneH);
     canvas.parent("sketch_view");
 
     initWalls();
@@ -125,7 +123,7 @@ function draw() {
     wall_count = wall_count_input.value;
     seed = Utils.stringSum(wall_seed.value.split(""));
 
-    let c_color = Utils.hexToRgb(color_input.value);
+    let c_color = ColourUtils.hexToRgb(color_input.value);
     particle.setColor(color(c_color.r, c_color.g, c_color.b, int(opacity_input.value)));
 
     particle.setFOV(int(fov_slider.value));

@@ -20,24 +20,10 @@ class Utils {
         return string_val.length == 0 ? random(sceneH * sceneH) : string_val.reduce(sumChar, 0);
     }
 
-    /**
-     * @param {String} hex 
-     * @returns {Object}
-     */
-    static hexToRgb(hex) {
-        var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-            return r + r + g + g + b + b;
-        });
+}
 
-        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
-            r: parseInt(result[1], 16),
-            g: parseInt(result[2], 16),
-            b: parseInt(result[3], 16)
-        } : null;
-    }
-    
+class RangeUtils {
+
     /**
      * @param {Number} lower 
      * @param {Number} upper
@@ -60,6 +46,37 @@ class Utils {
      */
     static zeroRange(angle, theta) {
         return degrees(angle) + (theta / 2);
+    }
+
+}
+
+class ColourUtils {
+
+    /**
+         * @param {Number} upper
+         * @returns {Number}
+         */
+    static randColour(upper) {
+        Math.seedrandom();
+        return Math.random() * upper;
+    }
+
+    /**
+     * @param {String} hex 
+     * @returns {Object}
+     */
+    static hexToRgb(hex) {
+        var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+            return r + r + g + g + b + b;
+        });
+
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
     }
 
 }

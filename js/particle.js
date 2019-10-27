@@ -97,8 +97,8 @@ class Particle {
      * @param {Number} y 
      */
     move(x=0, y=0) {
-        this.update(Utils.limitRange(this.x_limit.MIN, this.x_limit.MAX, this.pos.x + x),
-                    Utils.limitRange(this.y_limit.MIN, this.y_limit.MAX, this.pos.y + y));
+        this.update(RangeUtils.limitRange(this.x_limit.MIN, this.x_limit.MAX, this.pos.x + x),
+                    RangeUtils.limitRange(this.y_limit.MIN, this.y_limit.MAX, this.pos.y + y));
     }
 
     /**
