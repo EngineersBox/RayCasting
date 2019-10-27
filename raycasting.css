@@ -18,6 +18,7 @@ body {
 }
 
 #settings,td {
+    font-weight: normal;
     color: #ffff61;
 }
 #ray_color {
