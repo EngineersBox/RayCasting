@@ -72,22 +72,32 @@ class Particle {
     look(walls) {
         toRender = [];
         for (let ray of this.rays) {
-            let closest = null;
             let record = Infinity;
+            let ord_walls = [];
+            let ord_points = [];
             for (let wall of walls) {
                 const pt = ray.cast(wall);
                 if (pt) {
                     const d = p5.Vector.dist(this.pos, pt);
                     if (d < record) {
                         record = d;
-                        closest = {POINT: pt, WALL: wall};
+                        if (ord_walls.length > 0 && ord_walls[ord_walls.length - 1].density >= 1) {
+                            ord_walls = [];
+                            ord_points = [];
+                        }
+                        ord_walls.push(wall);
+                        ord_points.push(pt);
+
                     }
                 }
             }
-            if (closest) {
-                stroke(this.rayColor);
-                line(this.pos.x, this.pos.y, closest.POINT.x, closest.POINT.y);
-                toRender.push([ray.dir, p5.Vector.dist(this.pos, closest.POINT), closest.WALL.color]);
+            if (ord_walls.length > 0) {
+                for (let i = 0; i < ord_walls.length; i++) {
+                    stroke(this.rayColor);
+                    line(this.pos.x, this.pos.y, ord_points[i].x, ord_points[i].y);
+                    ord_walls[i].color.levels[3] = ord_walls[i].density;
+                    toRender.push([ray.dir, p5.Vector.dist(this.pos, ord_points[i]), ord_walls[i].color]);
+                }
             }
         }
     }
@@ -97,8 +107,8 @@ class Particle {
      * @param {Number} y 
      */
     move(x=0, y=0) {
-        this.update(RangeUtils.limitRange(this.x_limit.MIN, this.x_limit.MAX, this.pos.x + x),
-                    RangeUtils.limitRange(this.y_limit.MIN, this.y_limit.MAX, this.pos.y + y));
+        this.update(RangeUtils.clamp(this.x_limit.MIN, this.x_limit.MAX, this.pos.x + x),
+                    RangeUtils.clamp(this.y_limit.MIN, this.y_limit.MAX, this.pos.y + y));
     }
 
     /**

@@ -21,6 +21,9 @@ let wall_count = 5;
 let seed = Math.random();
 let particle;
 
+let WALL_DENSITY = 0.7;
+const WALL_REFLECTIVE_INDEX = 0.3;
+
 let toRender = [];
 let flashlight = {STATE: true, VALUE: 10};
 
@@ -40,13 +43,13 @@ function initWalls() {
         let r = ColourUtils.randColour(255);
         let g = ColourUtils.randColour(255);
         let b = ColourUtils.randColour(255);
-        walls.push(new Wall(x1, y1, x2, y2, color(r, g, b)));
+        walls.push(new Wall(x1, y1, x2, y2, color(r, g, b), WALL_DENSITY, WALL_REFLECTIVE_INDEX));
     }
 
-    walls.push(new Wall(0, 0, sceneW, 0, color(255)));
-    walls.push(new Wall(0, 0, 0, sceneH, color(255)));
-    walls.push(new Wall(0, sceneH, sceneW, sceneH, color(255)));
-    walls.push(new Wall(sceneW, 0, sceneW, sceneH, color(255)));
+    walls.push(new Wall(0, 0, sceneW, 0, color(255), WALL_DENSITY, WALL_REFLECTIVE_INDEX));
+    walls.push(new Wall(0, 0, 0, sceneH, color(255), WALL_DENSITY, WALL_REFLECTIVE_INDEX));
+    walls.push(new Wall(0, sceneH, sceneW, sceneH, color(255), WALL_DENSITY, WALL_REFLECTIVE_INDEX));
+    walls.push(new Wall(sceneW, 0, sceneW, sceneH, color(255), WALL_DENSITY, WALL_REFLECTIVE_INDEX));
 }
 
 function renderWalls() {
@@ -67,7 +70,7 @@ function renderWalls() {
 
         rectMode(CENTER);
         noStroke();
-        fill(color.r, color.g, color.b, ray_brightness);
+        fill(color.r, color.g, color.b, color.a * ray_brightness);
         rect((sceneW / 2) + (slice_width / 2) + (x_val * slice_width), sceneH / 2, slice_width, sceneH * d2);
     }
 }
@@ -78,6 +81,12 @@ function wallColorRandomize() {
         let g = ColourUtils.randColour(255);
         let b = ColourUtils.randColour(255);
         wall.color.levels = [r, g, b, wall.color.levels[3]];
+    }
+}
+
+function setWallOpacity() {
+    for (wall of walls.slice(0, walls.length - 4)) {
+        wall.density = WALL_DENSITY;
     }
 }
 
@@ -114,6 +123,7 @@ function draw() {
     redraw_button = document.getElementById("seed_button");
     wall_count_input = document.getElementById("wall_count");
     wall_seed = document.getElementById("wall_seed");
+    wall_opacity = document.getElementById("wall_opacity");
     fov_slider = document.getElementById("fov");
     color_input = document.getElementById("ray_color");
     opacity_input = document.getElementById("ray_opacity");
@@ -121,6 +131,8 @@ function draw() {
 
     MOVE_RATE = int(change_move_rate.value);
     wall_count = wall_count_input.value;
+    WALL_DENSITY = wall_opacity.value / wall_opacity.max;
+    setWallOpacity();
     seed = Utils.stringSum(wall_seed.value.split(""));
 
     let c_color = ColourUtils.hexToRgb(color_input.value);

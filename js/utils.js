@@ -22,21 +22,16 @@ class Utils {
 
 }
 
-class RangeUtils {
+class RangeUtils extends Number {
 
     /**
-     * @param {Number} lower 
-     * @param {Number} upper
+     * @param {Number} min 
+     * @param {Number} max
      * @param {Number} value
      * @returns {Number}
      */
-    static limitRange(lower, upper, value) {
-        if (value < lower) {
-            return lower + 1;
-        } else if (value > upper) {
-            return upper - 1;
-        }
-        return value;
+    static clamp(min, max, value) {
+        return Math.min(Math.max(value, min), max);
     }
 
     /**

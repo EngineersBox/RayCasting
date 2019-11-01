@@ -35,6 +35,17 @@ class Ray {
 
     /**
      * @param {Wall} wall 
+     * @returns {Number}
+     */
+    calcReflect(wall) {
+        let delta_x = this.dir.x - this.pos.x;
+        let delta_y = this.dir.y - this.pos.y;
+        let angle = atan(delta_y / delta_x);
+        return (delta_x < 0 ? angle + PI : angle) + wall.angle;
+    }
+
+    /**
+     * @param {Wall} wall 
      */
     cast(wall) {
         const x1 = wall.a.x;
