@@ -22,7 +22,7 @@ class Utils {
 
 }
 
-class RangeUtils extends Number {
+class RangeUtils {
 
     /**
      * @param {Number} min 
@@ -48,9 +48,9 @@ class RangeUtils extends Number {
 class ColourUtils {
 
     /**
-         * @param {Number} upper
-         * @returns {Number}
-         */
+     * @param {Number} upper
+     * @returns {Number}
+     */
     static randColour(upper) {
         Math.seedrandom();
         return Math.random() * upper;
@@ -62,7 +62,7 @@ class ColourUtils {
      */
     static hexToRgb(hex) {
         var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        hex = hex.replace(shorthandRegex, function(m, r, g, b) {
             return r + r + g + g + b + b;
         });
 
