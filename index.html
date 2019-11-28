@@ -12,11 +12,11 @@
     </head>
     <body>
         <div id="sketch_view">
-            <script type="text/javascript" src="js/sketch.js"></script>
             <script type="text/javascript" src="js/wall.js"></script>
             <script type="text/javascript" src="js/ray.js"></script>
             <script type="text/javascript" src="js/particle.js"></script>
             <script type="text/javascript" src="js/utils.js"></script>
+            <script type="text/javascript" src="js/sketch.js"></script>
         </div>
         <div id="settings">
             <table id="settings_table">
@@ -91,6 +91,14 @@
                     <td>
                         <input id="ray_opacity" type="range" min="0" max="255" value="155" style="width: 80px;">
                         <button type="button" id="fov_reset" onclick="Utils.resetById('ray_opacity', 155)">Reset Opacity</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Reflection Count
+                    </td>
+                    <td>
+                        <input id="reflect_count" type="number" min="0" max="10" value="0" style="width: 30px; border-radius: 2px; border: none; text-align: center;">
                     </td>
                 </tr>
             </table>

@@ -1,6 +1,8 @@
 class Utils {
 
     /**
+     * Set the value of a DOM element given by id
+     * 
      * @param {String} element_id 
      * @param {*} new_value 
      */
@@ -12,6 +14,9 @@ class Utils {
     }
 
     /**
+     * Calculate the sum of the characters of a string 
+     * if the sum is zero return a random value between 0 and sceneH * sceneH
+     * 
      * @param {String} string_val
      * @returns {Number}
      */
@@ -20,11 +25,23 @@ class Utils {
         return string_val.length == 0 ? random(sceneH * sceneH) : string_val.reduce(sumChar, 0);
     }
 
+    /**
+     * Get the DOM element with a specified id
+     * 
+     * @param {String} id 
+     * @returns {*}
+     */
+    static getElem(id) {
+        return document.getElementById(id);
+    }
+
 }
 
 class RangeUtils extends Number {
 
     /**
+     * Keep a value inside a range
+     * 
      * @param {Number} min 
      * @param {Number} max
      * @param {Number} value
@@ -35,7 +52,9 @@ class RangeUtils extends Number {
     }
 
     /**
-     * @param {p5.Vector} angle 
+     * Calculate an offset by a half rotation of theta
+     * 
+     * @param {Number} angle 
      * @param {Number} theta 
      * @returns {Number}
      */
@@ -48,15 +67,19 @@ class RangeUtils extends Number {
 class ColourUtils {
 
     /**
-         * @param {Number} upper
-         * @returns {Number}
-         */
+     * Generate a random colour
+     * 
+     * @param {Number} upper
+     * @returns {Number}
+     */
     static randColour(upper) {
         Math.seedrandom();
         return Math.random() * upper;
     }
 
     /**
+     * Convert a hex colour code to RGB values
+     * 
      * @param {String} hex 
      * @returns {Object}
      */

@@ -1,5 +1,8 @@
 class Ray {
+
     /**
+     * Create a new ray instance
+     * 
      * @param {p5.Vector} pos 
      * @param {Number} angle 
      */
@@ -9,6 +12,8 @@ class Ray {
     }
     
     /**
+     * Set the angle of the ray
+     * 
      * @param {Number} angle 
      */
     setAngle(angle) {
@@ -16,6 +21,8 @@ class Ray {
     }
 
     /**
+     * Change the direction of the ray to face a position
+     * 
      * @param {Number} x
      * @param {Number} y
      */
@@ -25,6 +32,9 @@ class Ray {
         this.dir.normalize();
     }
 
+    /**
+     * Renders the ray
+     */
     show() {
         stroke(255);
         push();
@@ -34,18 +44,10 @@ class Ray {
     }
 
     /**
+     * Returns the point of intersection between ray and wall or undefined otherwise
+     *
      * @param {Wall} wall 
-     * @returns {Number}
-     */
-    calcReflect(wall) {
-        let delta_x = this.dir.x - this.pos.x;
-        let delta_y = this.dir.y - this.pos.y;
-        let angle = atan(delta_y / delta_x);
-        return (delta_x < 0 ? angle + PI : angle) + wall.angle;
-    }
-
-    /**
-     * @param {Wall} wall 
+     * @returns {p5.Vector | undefined}
      */
     cast(wall) {
         const x1 = wall.a.x;

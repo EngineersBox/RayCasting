@@ -23,10 +23,15 @@ let particle;
 
 let WALL_DENSITY = 0.7;
 const WALL_REFLECTIVE_INDEX = 0.3;
+let WALL_REFLECT_COUNT = 1;
 
 let toRender = [];
 let flashlight = {STATE: true, VALUE: 10};
 
+/**
+ * Initialise the scene walls and generate an amount
+ * of random walls specified by wall_count
+ */
 function initWalls() {
     walls = [];
     
@@ -52,6 +57,9 @@ function initWalls() {
     walls.push(new Wall(sceneW, 0, sceneW, sceneH, color(255), WALL_DENSITY, WALL_REFLECTIVE_INDEX));
 }
 
+/**
+ * Render the walls in the scene
+ */
 function renderWalls() {
     let slice_width = sceneW / particle.getFOV();
     for (r of toRender) {
@@ -75,6 +83,10 @@ function renderWalls() {
     }
 }
 
+/**
+ * Randomise the colour of the walls in the scene
+ * excluding the border wals
+ */
 function wallColorRandomize() {
     for (wall of walls.slice(0, walls.length - 4)) {
         let r = ColourUtils.randColour(255);
@@ -84,6 +96,10 @@ function wallColorRandomize() {
     }
 }
 
+/**
+ * Set the opacity of the walls to the WALL_DENSITY constant value from the
+ * DOM element 'wall_opacity'
+ */
 function setWallOpacity() {
     for (wall of walls.slice(0, walls.length - 4)) {
         wall.density = WALL_DENSITY;
@@ -112,6 +128,18 @@ function keyPressed() {
     }
 }
 
+function initConst() {
+    redraw_button = Utils.getElem("seed_button");
+    wall_count_input = parseInt(Utils.getElem("wall_count").value);
+    wall_seed = Utils.getElem("wall_seed");
+    wall_opacity = Utils.getElem("wall_opacity");
+    fov_slider = Utils.getElem("fov");
+    color_input = Utils.getElem("ray_color");
+    opacity_input = Utils.getElem("ray_opacity");
+    change_move_rate = Utils.getElem("particle_speed");
+    WALL_REFLECT_COUNT = parseInt(Utils.getElem("reflect_count").value);
+}
+
 function draw() {
 
     background(0);
@@ -120,14 +148,7 @@ function draw() {
         wall.show();
     }
 
-    redraw_button = document.getElementById("seed_button");
-    wall_count_input = document.getElementById("wall_count");
-    wall_seed = document.getElementById("wall_seed");
-    wall_opacity = document.getElementById("wall_opacity");
-    fov_slider = document.getElementById("fov");
-    color_input = document.getElementById("ray_color");
-    opacity_input = document.getElementById("ray_opacity");
-    change_move_rate = document.getElementById("particle_speed");
+    initConst();
 
     MOVE_RATE = int(change_move_rate.value);
     wall_count = wall_count_input.value;
