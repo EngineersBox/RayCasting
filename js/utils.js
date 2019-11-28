@@ -37,7 +37,7 @@ class Utils {
 
 }
 
-class RangeUtils extends Number {
+class RangeUtils {
 
     /**
      * Keep a value inside a range
@@ -67,8 +67,6 @@ class RangeUtils extends Number {
 class ColourUtils {
 
     /**
-     * Generate a random colour
-     * 
      * @param {Number} upper
      * @returns {Number}
      */
@@ -85,7 +83,7 @@ class ColourUtils {
      */
     static hexToRgb(hex) {
         var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        hex = hex.replace(shorthandRegex, function(m, r, g, b) {
             return r + r + g + g + b + b;
         });
 
